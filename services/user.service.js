@@ -18,21 +18,6 @@ const createUser = async ({
     return user;
 }
 
-const loginUser = async ({
-    email
-}) => {
-
-    console.log("dxs ", email)
-    if (!email) {
-        throw new Error("All fields are required");
-    }
-    const user = userModel.findOne({
-        email
-    })
-    return user;
-}
-
 module.exports = {
     createUser,
-    loginUser,
 }
