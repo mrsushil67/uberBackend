@@ -17,4 +17,6 @@ router.post('/login', [
 
 router.get('/profile',authorization.authorizedUser, user.getUserProfile)
 
+router.get('/logout', authorization.authorizedUser, user.logoutUser)
+
 module.exports = router;
