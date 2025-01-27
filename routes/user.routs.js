@@ -27,10 +27,18 @@ router.post('/register', validateRegister, (req, res, next) => {
     user.registerUser(req, res, next);
 });
 
-router.post('/login', [
-    body('email').isEmail().withMessage('invalid email'),
-    body('password').isLength({ min: 6 }).withMessage("Password must be atleast 6 characters long"),
-], user.LoginUser)
+const validateLogin = [
+    body('email').isEmail().withMessage("Invalid email address"),
+    body('password').isLength({ min: 6 }).withMessage("password must be atleast 6 charactors.")
+]
+
+router.post('/login', validateLogin, (req, res, next) => {
+    const errors = validationResult(req);
+    if(!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+    user.LoginUser(req, res, next);
+})
 
 router.get('/profile',authorization.authorizedUser, user.getUserProfile)
 
